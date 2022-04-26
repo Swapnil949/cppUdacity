@@ -1,0 +1,6 @@
+[submodule "route_planning_project/thirdparty/googletest"]
+	path = route_planning_project/thirdparty/googletest
+	url = https://github.com/abseil/googletest.git
+[submodule "route_planning_project/thirdparty/pugixml"]
+	path = route_planning_project/thirdparty/pugixml
+	url = https://github.com/zeux/pugixml.git
