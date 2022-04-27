@@ -11,7 +11,11 @@ vector<vector <int>> ReadBoardFile(string path)
     ifstream myFile;
     myFile.open(path);
 
+    string line;
+    getline(myFile, line);
 
+    cout<< line;
+    
     myFile.close();
     return board;
 }
