@@ -55,7 +55,7 @@ vector<vector<State>> ReadBoardFile(string path)
     {
         std::cout << "Unable to open the file. error = " << myFile.fail() << "\n";
     }
-
+    
     myFile.close();
     return board;
 }
