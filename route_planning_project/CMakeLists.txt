@@ -8,11 +8,40 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 project(route_planning_project)
 
+# Set library output path to /lib
+set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/build/lib")
+
 # Locate project prerequisites
 find_package(io2d REQUIRED)
 find_package(Cairo)
 find_package(GraphicsMagick)
 
 # Add the pugixml and GoogleTest library subdirectories
-#add_subdirectory(thirdparty/pugixml)
-#add_subdirectory(thirdparty/googletest)
+add_subdirectory(thirdparty/pugixml)
+add_subdirectory(thirdparty/googletest)
+
+
+# Add project executable
+add_executable(route_planning_project src/main.cpp src/model.cpp src/render.cpp src/route_model.cpp src/route_planner.cpp)
+
+target_link_libraries(route_planning_project
+    PRIVATE io2d::io2d
+    PUBLIC pugixml
+)
+
+# Add the testing executable
+add_executable(test test/utest_rp_a_star_search.cpp src/route_planner.cpp src/model.cpp src/route_model.cpp)
+
+target_link_libraries(test 
+    gtest_main 
+    pugixml
+)
+
+# Set options for Linux or Microsoft Visual C++
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
+    target_link_libraries(route_planning_project PUBLIC pthread)
+endif()
+
+if(MSVC)
+	target_compile_options(route_planning_project PUBLIC /D_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING /wd4459)
+endif()
